@@ -1,0 +1,19 @@
+services:
+  app:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./:/app
+    command: python -c "print('Container ready. Use local Python for GUI.')"
+    tty: true
+
+  # Optional: container metrics via cAdvisor (may require Docker Desktop tweaks on Windows)
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro

@@ -1,0 +1,8 @@
+services:
+  app:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./:/app
+    command: python -c "print('Container ready. Use local Python for GUI.')"
+    tty: true

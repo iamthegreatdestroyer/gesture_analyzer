@@ -1,0 +1,8 @@
+opencv-python>=4.9.0
+# Pin mediapipe to a known Windows-compatible build; add protobuf constraint for compatibility.
+mediapipe==0.10.14
+protobuf<4
+numpy>=1.26
+pandas>=2.2.0
+pyqt5>=5.15.11
+pytest>=8.2.0

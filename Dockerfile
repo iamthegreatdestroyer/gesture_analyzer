@@ -1,0 +1,33 @@
+# GUI apps in containers are limited; this image focuses on backend deps.
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# OpenCV runtime deps
+ARG WITH_MEDIAPIPE=0
+
+RUN apt-get update \ 
+    ; apt-get install -y --no-install-recommends \
+    libgl1 \
+    libglib2.0-0 \
+    ffmpeg \
+    ; rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Optional: install MediaPipe when requested (wheel availability dependent)
+RUN if [ "$WITH_MEDIAPIPE" = "1" ] ; then \
+    pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir mediapipe==0.10.14 ; \
+    fi
+
+COPY . .
+
+VOLUME ["/app/data"]
+
+# Default command (won't display GUI on Windows). Override as needed.
+CMD ["python", "-c", "print('Container ready. Mount project to run local GUI.')"]

@@ -1,0 +1,7 @@
+opencv-python>=4.9.0
+# mediapipe optional; install manually if available
+# protobuf constraint only needed when mediapipe used
+numpy>=1.26
+pandas>=2.2.0
+pyqt5>=5.15.11
+pytest>=8.2.0
